@@ -13,8 +13,11 @@ const routes = [
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
+// Vite exposes the configured base; strip the trailing slash for the router.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(base || '/'),
   routes,
 })
 

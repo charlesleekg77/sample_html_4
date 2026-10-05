@@ -6,6 +6,8 @@ import { markdownAndApi } from './src/lib/mdServer.js'
 const root = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig({
+  // Set by the Pages workflow; empty in local dev so the site serves from "/".
+  base: process.env.VITE_BASE || '/',
   plugins: [vue(), markdownAndApi(root)],
   server: {
     host: '0.0.0.0',
