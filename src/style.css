@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,200..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * Fluid root font-size. Everything on the site is expressed in rem,
+ * so one number drives the whole layout scale.
+ * ------------------------------------------------------------------ */
+:root {
+  --size: 390; /* mobile design width */
+}
+@media (min-width: 650px) {
+  :root {
+    --size: 1500; /* desktop design width */
+  }
+}
+
+html {
+  font-size: clamp(5px, 20px, 10 * 100vw / var(--size));
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-synthesis: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* uppercase micro-label used across the chrome */
+.label {
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* drag cursor states, toggled on <html> */
+html.grabbable {
+  cursor: grab;
+}
+html.grabbing,
+html.grabbing * {
+  cursor: grabbing !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+/* the WebGL layer sits above the black background, below the chrome */
+.gl {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.gl canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* DOM text that is mirrored in WebGL is made transparent but stays
+   in the accessibility tree and keeps its hit area. This only applies
+   once the GL layer is live, so the DOM is a readable fallback when
+   WebGL is unavailable. Note we set -webkit-text-fill-color (not color)
+   so the rasteriser can still read the intended colour. */
+html.gl-active [data-gl='text'],
+html.gl-active [data-gl='text'] a,
+html.gl-active [data-gl='text'] button {
+  -webkit-text-fill-color: transparent;
+}
+
+html.gl-active [data-gl='card'],
+html.gl-active [data-gl='simple'] {
+  background-color: transparent;
+}
+
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
